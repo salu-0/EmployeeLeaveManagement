@@ -1,32 +1,42 @@
-using EmployeeLeaveManagement.Models;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-public class Employee
+namespace EmployeeLeaveManagement.Models
 {
-    public int EmployeeId { get; set; }
+    public class Employee
+    {
+        [Key]
+        public int EmployeeId { get; set; }
 
-    public string EmployeeCode { get; set; }
+        [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; } = string.Empty;
 
-    public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; } = string.Empty;
 
-    public string LastName { get; set; }
+        [Required]
+        [EmailAddress]
+        public string Email { get; set; } = string.Empty;
 
-    public string Email { get; set; }
+        [Phone]
+        [Display(Name = "Phone Number")]
+        public string? PhoneNumber { get; set; }
 
-    public string PhoneNumber { get; set; }
+        [Display(Name = "Designation")]
+        public string? Designation { get; set; }
 
-    public string Gender { get; set; }
+        [Display(Name = "Joining Date")]
+        [DataType(DataType.Date)]
+        public DateTime JoiningDate { get; set; } = DateTime.Today;
 
-    public DateTime DateOfBirth { get; set; }
+        public bool IsActive { get; set; } = true;
 
-    public string Designation { get; set; }
+        [Display(Name = "Department")]
+        public int DepartmentId { get; set; }
 
-    public DateTime JoiningDate { get; set; }
-
-    public bool IsActive { get; set; }
-
-    public string? ProfileImage { get; set; }
-
-    public int DepartmentId { get; set; }
-
-    public Department Department { get; set; }
+        [ForeignKey("DepartmentId")]
+        public Department? Department { get; set; }
+    }
 }

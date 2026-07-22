@@ -5,7 +5,11 @@
     <!-- Add sidebar content here -->
     <ul>
         <li><a href="/" class="@(currentController == "Dashboard" || currentController == "Home" || currentController == null ? "active" : "")">Dashboard</a></li>
-        <li><a href="/Employee" class="@(currentController == "Employee" ? "active" : "")">Employees</a></li>
+        <li>
+            <a asp-controller="Employee" asp-action="Index" class="@(currentController == "Employee" ? "active" : "")">
+                Employees
+            </a>
+        </li>
         <li><a href="/Departments" class="@(currentController == "Departments" || currentController == "Department" ? "active" : "")">Departments</a></li>
         <li><a href="/LeaveType" class="@(currentController == "LeaveType" ? "active" : "")">Leave Types</a></li>
         <li><a href="/LeaveRequest" class="@(currentController == "LeaveRequest" ? "active" : "")">Leave Requests</a></li>
