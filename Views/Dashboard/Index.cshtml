@@ -1,0 +1,92 @@
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="container-fluid">
+
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Total Employees</h5>
+                <h2>25</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Departments</h5>
+                <h2>5</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Pending Leaves</h5>
+                <h2>8</h2>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center p-3">
+                <h5>Approved</h5>
+                <h2>18</h2>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card shadow">
+
+        <div class="card-header">
+            <h4>Recent Leave Requests</h4>
+        </div>
+
+        <div class="card-body">
+
+            <table class="table table-striped">
+
+                <thead>
+
+                    <tr>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Leave Type</th>
+                        <th>Status</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+                        <td>John</td>
+                        <td>IT</td>
+                        <td>Casual Leave</td>
+                        <td>
+                            <span class="badge bg-success">
+                                Approved
+                            </span>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Anna</td>
+                        <td>HR</td>
+                        <td>Sick Leave</td>
+                        <td>
+                            <span class="badge bg-warning">
+                                Pending
+                            </span>
+                        </td>
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
