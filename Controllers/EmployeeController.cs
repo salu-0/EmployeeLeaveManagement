@@ -87,6 +87,7 @@ namespace EmployeeLeaveManagement.Controllers
         // ==========================
         // Edit Employee (GET)
         // ==========================
+
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -118,10 +119,17 @@ namespace EmployeeLeaveManagement.Controllers
 
             if (ModelState.IsValid)
             {
-                _context.Update(employee);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Update(employee);
+                    await _context.SaveChangesAsync();
 
-                TempData["Success"] = "Employee updated successfully.";
+                    TempData["Success"] = "Employee updated successfully.";
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
 
                 return RedirectToAction(nameof(Index));
             }
@@ -171,6 +179,30 @@ namespace EmployeeLeaveManagement.Controllers
             }
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteAjax(int id)
+        {
+            var employee = await _context.Employees.FindAsync(id);
+
+            if (employee == null)
+            {
+                return Json(new
+                {
+                    success = false,
+                    message = "Employee not found."
+                });
+            }
+
+            _context.Employees.Remove(employee);
+            await _context.SaveChangesAsync();
+
+            return Json(new
+            {
+                success = true,
+                message = "Employee deleted successfully."
+            });
         }
     }
 }

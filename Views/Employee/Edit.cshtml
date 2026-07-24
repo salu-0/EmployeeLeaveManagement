@@ -1,0 +1,134 @@
+@model EmployeeLeaveManagement.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-warning">
+
+        <h3 class="mb-0 text-dark">
+            <i class="bi bi-pencil-square"></i>
+            Edit Employee
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit">
+
+            <input type="hidden" asp-for="EmployeeId" />
+
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="FirstName" class="form-label"></label>
+
+                    <input asp-for="FirstName" class="form-control" />
+
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+
+                </div>
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="LastName" class="form-label"></label>
+
+                    <input asp-for="LastName" class="form-control" />
+
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Email"></label>
+
+                <input asp-for="Email" class="form-control" />
+
+                <span asp-validation-for="Email" class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="PhoneNumber"></label>
+
+                <input asp-for="PhoneNumber" class="form-control" />
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Designation"></label>
+
+                <input asp-for="Designation" class="form-control" />
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="DepartmentId"></label>
+
+                <select asp-for="DepartmentId"
+                        asp-items="ViewBag.DepartmentId"
+                        class="form-select">
+                </select>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="JoiningDate"></label>
+
+                <input asp-for="JoiningDate"
+                       type="date"
+                       class="form-control" />
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input asp-for="IsActive"
+                       class="form-check-input" />
+
+                <label asp-for="IsActive"
+                       class="form-check-label"></label>
+
+            </div>
+
+            <button class="btn btn-warning">
+
+                <i class="bi bi-check-circle"></i>
+
+                Update Employee
+
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

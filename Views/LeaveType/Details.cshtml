@@ -1,0 +1,95 @@
+﻿@model EmployeeLeaveManagement.Models.LeaveType
+
+@{
+    ViewData["Title"] = "Leave Type Details";
+}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-info text-white">
+
+        <h3 class="mb-0">
+
+            <i class="bi bi-info-circle"></i>
+
+            Leave Type Details
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <dl class="row">
+
+            <dt class="col-sm-3">
+                Leave Type
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.LeaveName
+            </dd>
+
+            <dt class="col-sm-3">
+                Allowed Days
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.DefaultDays
+            </dd>
+
+            <dt class="col-sm-3">
+                Description
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.Description
+            </dd>
+
+            <dt class="col-sm-3">
+                Status
+            </dt>
+
+            <dd class="col-sm-9">
+
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+
+            </dd>
+
+            <dt class="col-sm-3">
+                Created Date
+            </dt>
+
+            <dd class="col-sm-9">
+                @Model.CreatedDate.ToString("dd MMM yyyy")
+            </dd>
+
+        </dl>
+
+        <a asp-action="Edit"
+           asp-route-id="@Model.LeaveTypeId"
+           class="btn btn-warning">
+
+            <i class="bi bi-pencil"></i>
+
+            Edit
+
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>

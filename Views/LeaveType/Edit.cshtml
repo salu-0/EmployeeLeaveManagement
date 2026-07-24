@@ -1,0 +1,105 @@
+@model EmployeeLeaveManagement.Models.LeaveType
+
+@{
+    ViewData["Title"] = "Edit Leave Type";
+}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-warning">
+
+        <h3 class="mb-0">
+
+            <i class="bi bi-pencil-square"></i>
+
+            Edit Leave Type
+
+        </h3>
+
+    </div>
+
+    <div class="card-body">
+
+        <form asp-action="Edit">
+
+            <input type="hidden"
+                   asp-for="LeaveTypeId" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3"></div>
+
+            <div class="mb-3">
+
+                <label asp-for="LeaveName"
+                       class="form-label"></label>
+
+                <input asp-for="LeaveName"
+                       class="form-control" />
+
+                <span asp-validation-for="LeaveName"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="DefaultDays"
+                       class="form-label"></label>
+
+                <input asp-for="DefaultDays"
+                       class="form-control" />
+
+                <span asp-validation-for="DefaultDays"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="Description"
+                       class="form-label"></label>
+
+                <textarea asp-for="Description"
+                          rows="3"
+                          class="form-control"></textarea>
+
+            </div>
+
+            <div class="form-check mb-4">
+
+                <input asp-for="IsActive"
+                       class="form-check-input" />
+
+                <label asp-for="IsActive"
+                       class="form-check-label"></label>
+
+            </div>
+
+            <button class="btn btn-warning">
+
+                <i class="bi bi-check-circle"></i>
+
+                Update
+
+            </button>
+
+            <a asp-action="Index"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

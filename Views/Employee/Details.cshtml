@@ -1,0 +1,92 @@
+@model EmployeeLeaveManagement.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="card shadow border-0">
+
+    <div class="card-header bg-info text-white">
+        <h3 class="mb-0">
+            <i class="bi bi-person-badge-fill"></i>
+            Employee Details
+        </h3>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4 text-center">
+
+                <img src="https://ui-avatars.com/api/?name=@Model.FirstName+@Model.LastName&background=0D6EFD&color=fff&size=200"
+                     class="rounded-circle shadow mb-3"
+                     width="180" />
+
+                <h4>@Model.FirstName @Model.LastName</h4>
+
+                @if (Model.IsActive)
+                {
+                    <span class="badge bg-success">Active</span>
+                }
+                else
+                {
+                    <span class="badge bg-danger">Inactive</span>
+                }
+
+            </div>
+
+            <div class="col-md-8">
+
+                <table class="table table-bordered">
+
+                    <tr>
+                        <th width="30%">Email</th>
+                        <td>@Model.Email</td>
+                    </tr>
+
+                    <tr>
+                        <th>Phone</th>
+                        <td>@Model.PhoneNumber</td>
+                    </tr>
+
+                    <tr>
+                        <th>Designation</th>
+                        <td>@Model.Designation</td>
+                    </tr>
+
+                    <tr>
+                        <th>Department</th>
+                        <td>@Model.Department?.DepartmentName</td>
+                    </tr>
+
+                    <tr>
+                        <th>Joining Date</th>
+                        <td>@Model.JoiningDate.ToString("dd MMM yyyy")</td>
+                    </tr>
+
+                </table>
+
+                <a asp-action="Edit"
+                   asp-route-id="@Model.EmployeeId"
+                   class="btn btn-warning">
+
+                    <i class="bi bi-pencil-square"></i>
+                    Edit
+
+                </a>
+
+                <a asp-action="Index"
+                   class="btn btn-secondary">
+
+                    Back
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

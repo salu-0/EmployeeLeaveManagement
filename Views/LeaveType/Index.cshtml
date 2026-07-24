@@ -1,0 +1,283 @@
+@model IEnumerable<EmployeeLeaveManagement.Models.LeaveType>
+
+@{
+    ViewData["Title"] = "Leave Types";
+}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white d-flex justify-content-between align-items-center">
+
+        <div>
+
+            <h3 class="fw-bold mb-0">
+
+                <i class="bi bi-calendar2-check-fill text-primary"></i>
+
+                Leave Types
+
+            </h3>
+
+            <small class="text-muted">
+
+                Manage leave categories
+
+            </small>
+
+        </div>
+
+        <a asp-action="Create" class="btn btn-primary">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Leave Type
+
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+
+            <table id="leaveTypeTable"
+                   class="table table-hover align-middle">
+
+                <thead class="table-light">
+
+                    <tr>
+
+                        <th>Leave Type</th>
+
+                        <th>Allowed Days</th>
+
+                        <th>Description</th>
+
+                        <th>Status</th>
+
+                        <th>Created</th>
+
+                        <th class="text-center">Actions</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+
+                            <td>
+
+                                @item.LeaveName
+
+                            </td>
+
+                            <td>
+
+                                @item.DefaultDays
+
+                            </td>
+
+                            <td>
+
+                                @item.Description
+
+                            </td>
+
+                            <td>
+
+                                @if (item.IsActive)
+                                {
+                                    <span class="badge bg-success">
+
+                                        Active
+
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge bg-danger">
+
+                                        Inactive
+
+                                    </span>
+                                }
+
+                            </td>
+
+                            <td>
+
+                                @item.CreatedDate.ToString("dd MMM yyyy")
+
+                            </td>
+
+                            <td class="text-center">
+
+                                <a asp-action="Details"
+                                   asp-route-id="@item.LeaveTypeId"
+                                   class="btn btn-info btn-sm text-white">
+
+                                    <i class="bi bi-eye"></i>
+
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.LeaveTypeId"
+                                   class="btn btn-warning btn-sm">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </a>
+
+                                <button class="btn btn-danger btn-sm delete-btn"
+                                        data-id="@item.LeaveTypeId"
+                                        data-name="@item.LeaveName">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </button>
+
+                            </td>
+
+                        </tr>
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script>
+
+        $(document).ready(function() {
+
+            var table = $('#leaveTypeTable').DataTable({
+
+                responsive: true,
+
+                pageLength: 10,
+
+                lengthMenu: [5, 10, 25, 50],
+
+                language: {
+                    emptyTable: 'No leave types found. Click "Add Leave Type" to create your first leave category.'
+                },
+
+                dom: 'Bfrtip',
+
+                buttons: [
+
+                    {
+                        extend: 'copy',
+                        className: 'btn btn-secondary'
+                    },
+
+                    {
+                        extend: 'excel',
+                        className: 'btn btn-success'
+                    },
+
+                    {
+                        extend: 'csv',
+                        className: 'btn btn-primary'
+                    },
+
+                    {
+                        extend: 'pdf',
+                        className: 'btn btn-danger'
+                    },
+
+                    {
+                        extend: 'print',
+                        className: 'btn btn-dark'
+                    }
+
+                ]
+
+            });
+
+            $('.delete-btn').click(function() {
+
+                let button = $(this);
+
+                let id = button.data("id");
+
+                let name = button.data("name");
+
+                Swal.fire({
+
+                    title: "Delete Leave Type?",
+
+                    text: "Are you sure you want to delete '" + name + "'?",
+
+                    icon: "warning",
+
+                    showCancelButton: true,
+
+                    confirmButtonColor: "#dc3545",
+
+                    cancelButtonColor: "#6c757d",
+
+                    confirmButtonText: "Yes, Delete"
+
+                }).then((result) => {
+
+                    if (result.isConfirmed) {
+
+                        $.ajax({
+
+                            url: '/LeaveType/DeleteAjax',
+
+                            type: 'POST',
+
+                            data: { id: id },
+
+                            success: function(response) {
+
+                                if (response.success) {
+
+                                    table
+                                        .row(button.parents('tr'))
+                                        .remove()
+                                        .draw();
+
+                                    toastr.success(response.message);
+
+                                }
+                                else {
+
+                                    toastr.error(response.message);
+
+                                }
+
+                            },
+
+                            error: function() {
+
+                                toastr.error("Something went wrong.");
+
+                            }
+
+                        });
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+}
