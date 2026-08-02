@@ -1,17 +1,83 @@
 @{
     var currentController = ViewContext.RouteData.Values["controller"]?.ToString();
 }
+
 <aside class="sidebar">
-    <!-- Add sidebar content here -->
     <ul>
-        <li><a href="/" class="@(currentController == "Dashboard" || currentController == "Home" || currentController == null ? "active" : "")">Dashboard</a></li>
+
+        <!-- Dashboard -->
         <li>
-            <a asp-controller="Employee" asp-action="Index" class="@(currentController == "Employee" ? "active" : "")">
-                Employees
-            </a>
+            @if (User.IsInRole("Admin"))
+            {
+                <a asp-controller="Dashboard"
+                   asp-action="Index"
+                   class="@(currentController == "Dashboard" ? "active" : "")">
+                    Dashboard
+                </a>
+            }
+            else if (User.IsInRole("Employee"))
+            {
+                <a asp-controller="EmployeeDashboard"
+                   asp-action="Index"
+                   class="@(currentController == "EmployeeDashboard" ? "active" : "")">
+                    Dashboard
+                </a>
+            }
         </li>
-        <li><a href="/Departments" class="@(currentController == "Departments" || currentController == "Department" ? "active" : "")">Departments</a></li>
-        <li><a href="/LeaveType" class="@(currentController == "LeaveType" ? "active" : "")">Leave Types</a></li>
-        <li><a href="/LeaveRequest" class="@(currentController == "LeaveRequest" ? "active" : "")">Leave Requests</a></li>
+
+        @if (User.IsInRole("Admin"))
+        {
+            <li>
+                <a asp-controller="Employee"
+                   asp-action="Index"
+                   class="@(currentController == "Employee" ? "active" : "")">
+                    Employees
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="Department"
+                   asp-action="Index"
+                   class="@(currentController == "Department" ? "active" : "")">
+                    Departments
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="LeaveType"
+                   asp-action="Index"
+                   class="@(currentController == "LeaveType" ? "active" : "")">
+                    Leave Types
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="LeaveRequest"
+                   asp-action="Index"
+                   class="@(currentController == "LeaveRequest" ? "active" : "")">
+                    Leave Requests
+                </a>
+            </li>
+        }
+
+        @if (User.IsInRole("Employee"))
+        {
+            <li>
+                <a asp-controller="LeaveRequest"
+                   asp-action="Create"
+                   class="@(currentController == "LeaveRequest" ? "active" : "")">
+                    Apply Leave
+                </a>
+            </li>
+
+            <li>
+                <a asp-controller="LeaveRequest"
+                   asp-action="MyRequests"
+                   class="@(currentController == "LeaveRequest" ? "active" : "")">
+                    My Leave Requests
+                </a>
+            </li>
+        }
+
     </ul>
 </aside>

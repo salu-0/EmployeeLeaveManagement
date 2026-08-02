@@ -15,125 +15,197 @@
     <link href="https://cdn.datatables.net/1.13.8/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
     <!-- DataTables Buttons -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css">
+    <link href="https://cdn.datatables.net/buttons/2.4.2/css/buttons.bootstrap5.min.css" rel="stylesheet" />
 
-    <!-- Toastr CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+    <!-- Toastr -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
 
-    <!-- Site CSS -->
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
 </head>
+
+@{
+    bool isIdentityPage = ViewContext.RouteData.Values["area"]?.ToString() == "Identity";
+}
 
 <body>
 
-    <div class="d-flex">
+    @if (!isIdentityPage)
+    {
+        <div class="d-flex">
 
-        <!-- Sidebar -->
-        <div class="sidebar">
+            <!-- Sidebar -->
+            <div class="sidebar">
 
-            <h3 class="logo">
-                <i class="bi bi-calendar-check"></i>
-                ELMS
-            </h3>
+                <h3 class="logo">
+                    <i class="bi bi-calendar-check"></i>
+                    ELMS
+                </h3>
 
-            <hr />
+                <hr />
 
-            <a asp-controller="Dashboard"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                @if (User.IsInRole("Admin"))
+                {
+                    <a asp-controller="Dashboard"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Dashboard" ? "active" : "")">
+                        <i class="bi bi-speedometer2"></i>
+                        Dashboard
+                    </a>
 
-                <i class="bi bi-speedometer2"></i>
-                Dashboard
+                    <a asp-controller="Department"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Department" ? "active" : "")">
+                        <i class="bi bi-building"></i>
+                        Departments
+                    </a>
 
-            </a>
+                    <a asp-controller="Employee"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Employee" ? "active" : "")">
+                        <i class="bi bi-people"></i>
+                        Employees
+                    </a>
 
-            <a asp-controller="Department"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Department" ? "active" : "")">
+                    <a asp-controller="LeaveType"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveType" ? "active" : "")">
+                        <i class="bi bi-calendar-event"></i>
+                        Leave Types
+                    </a>
 
-                <i class="bi bi-building"></i>
-                Departments
+                    <a asp-controller="LeaveRequest"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveRequest" ? "active" : "")">
+                        <i class="bi bi-file-earmark-text"></i>
+                        Leave Requests
+                    </a>
 
-            </a>
+                    <a asp-controller="Report"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Report" ? "active" : "")">
+                        <i class="bi bi-bar-chart"></i>
+                        Reports
+                    </a>
+                }
 
-            <a asp-controller="Employee"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Employee" ? "active" : "")">
+                else if (User.IsInRole("Employee"))
+                {
+                    <a asp-controller="EmployeeDashboard"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "EmployeeDashboard" ? "active" : "")">
+                        <i class="bi bi-speedometer2"></i>
+                        Dashboard
+                    </a>
 
-                <i class="bi bi-people"></i>
-                Employees
+                    <a asp-controller="LeaveRequest"
+                       asp-action="Create"
+                       class="@(ViewContext.RouteData.Values["action"]?.ToString() == "Create" ? "active" : "")">
+                        <i class="bi bi-calendar-plus"></i>
+                        Apply Leave
+                    </a>
 
-            </a>
+                    <a asp-controller="LeaveRequest"
+                       asp-action="MyLeaves"
+                       class="@(ViewContext.RouteData.Values["action"]?.ToString() == "MyLeaves" ? "active" : "")">
+                        <i class="bi bi-calendar-check"></i>
+                        My Leaves
+                    </a>
 
-            <a asp-controller="LeaveType"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveType" ? "active" : "")">
+                    <a asp-controller="Profile"
+                       asp-action="Index"
+                       class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Profile" ? "active" : "")">
+                        <i class="bi bi-person"></i>
+                        My Profile
+                    </a>
+                }
 
-                <i class="bi bi-calendar-event"></i>
-                Leave Types
+            </div>
 
-            </a>
+            <!-- Main Content -->
+            <div class="main-content">
 
-            <a asp-controller="LeaveRequest"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "LeaveRequest" ? "active" : "")">
+                <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded px-4 mb-4">
 
-                <i class="bi bi-file-earmark-text"></i>
-                Leave Requests
+                    <div class="container-fluid">
 
-            </a>
+                        <a class="navbar-brand fw-bold text-primary"
+                           asp-controller="Home"
+                           asp-action="Index">
+                            <i class="bi bi-calendar-check-fill"></i>
+                            ELMS
+                        </a>
 
-            <a asp-controller="Report"
-               asp-action="Index"
-               class="@(ViewContext.RouteData.Values["controller"]?.ToString() == "Report" ? "active" : "")">
+                        <ul class="navbar-nav ms-auto align-items-center">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                @await Component.InvokeAsync("Notification")
+                            }
 
-                <i class="bi bi-bar-chart"></i>
-                Reports
+                            <li class="nav-item">
+                                <div class="dropdown">
 
-            </a>
+                                    <a href="#"
+                                       class="text-decoration-none dropdown-toggle px-2"
+                                       data-bs-toggle="dropdown">
 
-        </div>
+                                        <i class="bi bi-person-circle fs-2 text-primary"></i>
 
-        <!-- Main Content -->
-        <div class="main-content">
+                                    </a>
 
-            <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm rounded px-4 mb-4">
+                                    <ul class="dropdown-menu dropdown-menu-end">
 
-                <div class="container-fluid">
+                                        <li>
+                                            <span class="dropdown-item-text fw-bold">
+                                                @User.Identity?.Name
+                                            </span>
+                                        </li>
 
-                    <h4 class="m-0 fw-bold">
+                                        <li>
+                                            <hr class="dropdown-divider" />
+                                        </li>
 
-                        Employee Leave Management System
+                                        <li>
 
-                    </h4>
+                                            <form asp-area="Identity"
+                                                  asp-page="/Account/Logout"
+                                                  asp-route-returnUrl="/Identity/Account/Login"
+                                                  method="post">
 
-                    <div class="d-flex align-items-center">
+                                                <button type="submit" class="dropdown-item">
+                                                    <i class="bi bi-box-arrow-right"></i>
+                                                    Logout
+                                                </button>
 
-                        <button class="btn position-relative me-3">
+                                            </form>
 
-                            <i class="bi bi-bell fs-4"></i>
+                                        </li>
 
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    </ul>
 
-                                3
-
-                            </span>
-
-                        </button>
-
-                        <i class="bi bi-person-circle fs-2 text-primary"></i>
-
+                                </div>
+                            </li>
+                        </ul>
                     </div>
+                </nav>
 
-                </div>
+                @RenderBody()
 
-            </nav>
+                <!-- Footer -->
+                @await Html.PartialAsync("_Footer")
 
-            @RenderBody()
+            </div>
 
         </div>
-
-    </div>
+    }
+    else
+    {
+        <main class="identity-page">
+            @RenderBody()
+        </main>
+    }
 
     <!-- jQuery -->
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -158,46 +230,30 @@
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
 
-    <!-- SweetAlert2 -->
+    <!-- SweetAlert -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <!-- Toastr JS -->
+    <!-- Toastr -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
-    <!-- Site JS -->
+    <!-- Site -->
     <script src="~/js/site.js" asp-append-version="true"></script>
 
-    <!-- Clear Cache Script -->
-    <script>
-        // Force clear all cache on page load
-        if ('caches' in window) {
-            caches.keys().then(function(cacheNames) {
-                cacheNames.forEach(function(cacheName) {
-                    caches.delete(cacheName);
-                });
-            });
-        }
-        // Clear localStorage
-        localStorage.clear();
-    </script>
-
-    <!-- Toastr Messages -->
     @if (TempData["Success"] != null)
     {
         <script>
-            toastr.success('@TempData["Success"]');
+                toastr.success('@TempData["Success"]');
         </script>
     }
 
     @if (TempData["Error"] != null)
     {
         <script>
-            toastr.error('@TempData["Error"]');
+                toastr.error('@TempData["Error"]');
         </script>
     }
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/countup.js/2.8.0/countUp.umd.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
